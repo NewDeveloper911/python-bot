@@ -54,4 +54,4 @@ async def add_roles(ctx):
     role = discord.utils.get(member.guild.roles, name="The crocodile hunter")
     await discord.Member.add_roles(member, role)
     
-client.run("NzUwNDI5NTYzMDI4MjQyNTEy.X06Z_g.G1hAF3E1chz8xghibATUGEqJKmA")
+client.run(*TOKEN*)
