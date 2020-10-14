@@ -2,8 +2,12 @@ import discord
 from discord.ext import commands
 import random
 import json
+from datetime import datetime
+import pytz
 
 client = commands.Bot(command_prefix="!")
+local_tz = timezone('Asia/Dubai')
+nowtime = datetime.now(local_tz)
 
 class Slapper(commands.Converter):
 	async def convert(self, ctx, argument):
@@ -30,7 +34,12 @@ async def joined(ctx, *, member: discord.Member):
 @client.command()
 async def hello(ctx):
     await ctx.send("Hi there, " + str(ctx.author) + " of the " + str(ctx.guild) + ".")
-    
+
+@client.command()
+async def greet(ctx, timezone):
+	cur_tz = timezone(timezone)
+	current_time = cur_tz.localize(nowtime)
+
 @client.command()
 async def info(ctx):
     embed = discord.Embed(
@@ -49,9 +58,9 @@ async def info(ctx):
     await ctx.send(embed=embed)
     
 @client.command()
-async def add_roles(ctx):
+async def add_roles(ctx, rolename):
     member = ctx.message.author
-    role = discord.utils.get(member.guild.roles, name="The crocodile hunter")
+    role = discord.utils.get(member.guild.roles, name=rolename)
     await discord.Member.add_roles(member, role)
 
 @client.event
